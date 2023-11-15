@@ -6,7 +6,7 @@ jobs:
         auth:
           username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD
-    # resource_class: arm.medium
+    resource_class: arm.medium
     steps:
       - checkout
       - setup_remote_docker
