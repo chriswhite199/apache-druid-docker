@@ -16,7 +16,8 @@ jobs:
           command: |
             TAG=25.0.$CIRCLE_BUILD_NUM
             whoami
-            sudo apt-get install qemu binfmt-support qemu-user-static
+            sudo apt update
+            sudo apt install qemu binfmt-support qemu-user-static
             docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
             docker buildx ls
             # docker build -t $DOCKERHUB_USERNAME/apache-druid:$TAG .
