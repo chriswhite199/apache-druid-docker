@@ -1,12 +1,13 @@
 version: 2.1
 jobs:
+  
   build:
     docker:
-      - image: jdrouet/docker-with-buildx:latest
+      - image: cimg/base:current
         auth:
           username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD
-    resource_class: arm.medium
+    # resource_class: arm.medium
     steps:
       - checkout
       - setup_remote_docker
@@ -14,6 +15,9 @@ jobs:
           name: Build and Push application Docker image
           command: |
             TAG=25.0.$CIRCLE_BUILD_NUM
+            whoami
+            apt-get install qemu binfmt-support qemu-user-static
+            docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
             docker buildx ls
             # docker build -t $DOCKERHUB_USERNAME/apache-druid:$TAG .
             # echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
